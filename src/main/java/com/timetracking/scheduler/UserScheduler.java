@@ -27,7 +27,7 @@ public class UserScheduler {
       topUserService.updateTopUsers();
    }
 
-   @Scheduled(cron = "0 2 0 * * *")
+   @Scheduled(cron = "0 0 0 * * *")
    public void addTop10Users()
            throws ExecutionException, InterruptedException {
 

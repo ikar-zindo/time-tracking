@@ -17,7 +17,6 @@ public class TopUsersController {
       this.topUserService = topUserService;
    }
 
-
    // UPDATE - TOP USERS
    @PutMapping("/updateTopUsers")
    public List<User> updateTopUsers()

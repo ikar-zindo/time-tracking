@@ -23,8 +23,6 @@ public class TopUserService {
    public List<User> updateTopUsers()
            throws ExecutionException, InterruptedException {
 
-      clearTopUsers();
-
       List<User> topUsers = userService.getAllUsers().stream()
               .sorted(Comparator.comparing(User::getRating).reversed())
               .toList();
