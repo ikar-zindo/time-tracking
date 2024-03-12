@@ -18,6 +18,7 @@ public class TopUserService {
       this.userService = userService;
    }
 
+   // DELETE - CLEAR TOP USERS
    public void clearTopUsers()
            throws ExecutionException, InterruptedException {
 
@@ -31,6 +32,7 @@ public class TopUserService {
       }
    }
 
+   // CREATE - FILLING WITH DATA TOP USERS
    public List<User> addTop10Users()
            throws ExecutionException, InterruptedException {
 

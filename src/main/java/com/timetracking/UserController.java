@@ -34,31 +34,31 @@ public class UserController {
       return ResponseEntity.ok("Estimate set successfully");
    }
 
-   // READ
+   // READ - ALL USERS
    @GetMapping("/getAll")
    public List<User> getAllUsers() throws InterruptedException, ExecutionException {
       return userService.getAllUsers();
    }
 
-   // CREATE
+   // CREATE - USER
    @PostMapping("/create")
    public String createUser(@RequestBody User user) throws InterruptedException, ExecutionException {
       return userService.createUser(user);
    }
 
-   // READ
+   // READ - USER
    @GetMapping("/get")
    public User getUsers(@RequestParam String id) throws InterruptedException, ExecutionException {
       return userService.getUser(id);
    }
 
-   // UPDATE
+   // UPDATE - USER
    @PutMapping("/update")
    public String updateUsers(@RequestBody User user) throws InterruptedException, ExecutionException {
       return userService.updateUser(user);
    }
 
-   // DELETE
+   // DELETE - USER
    @DeleteMapping("/delete")
    public String deleteUsers(@RequestParam String id) throws InterruptedException, ExecutionException {
       return userService.deleteUser(id);

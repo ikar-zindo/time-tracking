@@ -15,12 +15,13 @@ public class TopUsersController {
       this.topUserService = topUserService;
    }
 
+   // DELETE - CLEAR TOP USERS
    @DeleteMapping("/clear")
    public void clearTopUsers() throws InterruptedException, ExecutionException {
       topUserService.clearTopUsers();
    }
 
-   // CREATE
+   // CREATE - FILLING WITH DATA TOP USERS
    @PostMapping("/addTop10Users")
    public List<User> createUser() throws InterruptedException, ExecutionException {
       return topUserService.addTop10Users();
