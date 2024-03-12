@@ -1,7 +1,6 @@
 package com.timetracking.controller;
 
 import com.timetracking.domain.User;
-import com.timetracking.service.TopUserService;
 import com.timetracking.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +22,8 @@ public class UserController {
    @PatchMapping("/set-estimate")
    public ResponseEntity<String> setEstimateToUser(@RequestParam String userIdFrom,
                                                    @RequestParam String userIdTo,
-                                                   @RequestParam Double estimate) throws ExecutionException, InterruptedException {
+                                                   @RequestParam Double estimate)
+           throws ExecutionException, InterruptedException {
 
       userService.setEstimateToUser(userIdFrom, userIdTo, estimate);
       return ResponseEntity.ok("Estimate set successfully");

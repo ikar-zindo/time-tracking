@@ -7,43 +7,11 @@ import com.timetracking.domain.User;
 import com.timetracking.exception.UserException;
 import org.springframework.stereotype.Service;
 
-import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 @Service
 public class UserService {
-
-
-   // UPDATE - SET ESTIMATE
-   public void setEstimateToUser(String userIdFrom, String userIdTo, Double estimate) throws ExecutionException, InterruptedException {
-      Firestore dbFirestore = FirestoreClient.getFirestore();
-      DocumentReference documentReference = dbFirestore.collection("users").document(userIdTo);
-
-
-      ApiFuture<DocumentSnapshot> future = documentReference.get();
-      DocumentSnapshot documentSnapshot = future.get();
-
-      if (documentSnapshot.exists()) {
-         User user = documentSnapshot.toObject(User.class);
-
-         Map<String, Double> estimates = user.getEstimates();
-
-         if (estimates == null) {
-            estimates = new HashMap<>();
-         }
-
-         estimates.put(userIdFrom, estimate);
-         updateUserRating(userIdTo);
-
-         WriteBatch batch = dbFirestore.batch();
-         batch.update(documentReference, "estimates", estimates);
-         batch.commit().get();
-
-      } else {
-         throw new UserException("User not found!");
-      }
-   }
 
    // READ - USERS
    public List<User> getAllUsers()
@@ -74,7 +42,6 @@ public class UserService {
       user.setRating(0.0);
       user.setEstimates(Collections.emptyMap());
       user.setIsBlocked(false);
-      user.setCreatedAt(ZonedDateTime.now());
 
       ApiFuture<WriteResult> collectionsApiFuture =
               dbFirestore.collection("users").document(user.getId()).set(user);
@@ -113,41 +80,38 @@ public class UserService {
       return collectionsApiFuture.get().getUpdateTime().toString();
    }
 
-   // DELETE - USER
-   public String deleteUser(String userId) {
+   // UPDATE - SET ESTIMATE
+   public void setEstimateToUser(String userIdFrom, String userIdTo, Double estimate)
+           throws ExecutionException, InterruptedException {
+
       Firestore dbFirestore = FirestoreClient.getFirestore();
-      ApiFuture<WriteResult> writeResult = dbFirestore.collection("user_name").document(userId).delete();
+      DocumentReference documentReference = dbFirestore.collection("users").document(userIdTo);
 
-      return "Successfully deleted " + userId;
+      ApiFuture<DocumentSnapshot> future = documentReference.get();
+      DocumentSnapshot documentSnapshot = future.get();
+
+      if (documentSnapshot.exists()) {
+         User user = documentSnapshot.toObject(User.class);
+
+         Map<String, Double> estimates = user.getEstimates();
+
+         if (estimates == null) {
+            estimates = new HashMap<>();
+         }
+
+         estimates.put(userIdFrom, estimate);
+         updateUserRating(userIdTo);
+
+         WriteBatch batch = dbFirestore.batch();
+         batch.update(documentReference, "estimates", estimates);
+         batch.commit().get();
+
+      } else {
+         throw new UserException("User not found!");
+      }
    }
 
-   // ==================================================================================================================
-
-   // GENERATE UUID
-   private String generateRandomId() {
-      return java.util.UUID.randomUUID().toString();
-   }
-
-   public String generateUniqueId(Firestore dbFirestore)
-           throws ExecutionException, InterruptedException {
-
-      String userId;
-      do {
-         userId = generateRandomId();
-
-      } while (userIdExists(dbFirestore, userId));
-
-      return userId;
-   }
-
-   // CHECK UUID IN DB
-   private boolean userIdExists(Firestore dbFirestore, String userId)
-           throws ExecutionException, InterruptedException {
-
-      return dbFirestore.collection("users").document(userId).get().get().exists();
-   }
-
-   // AGGREGATION
+   // UPDATE - USER RATING
    public Double updateUserRating(String userId)
            throws ExecutionException, InterruptedException {
 
@@ -174,11 +138,41 @@ public class UserService {
 
             return rating;
 
-         }else {
+         } else {
             throw new UserException("Estimates not found!");
          }
       } else {
          throw new UserException("User nit found!");
       }
+   }
+
+   // DELETE - USER
+   public String deleteUser(String userId) {
+      Firestore dbFirestore = FirestoreClient.getFirestore();
+      ApiFuture<WriteResult> writeResult = dbFirestore.collection("user_name").document(userId).delete();
+
+      return "Successfully deleted " + userId;
+   }
+
+   // GENERATE UUID
+   private String generateRandomId() {
+      return java.util.UUID.randomUUID().toString();
+   }
+
+   public String generateUniqueId(Firestore dbFirestore)
+           throws ExecutionException, InterruptedException {
+
+      String userId;
+      do userId = generateRandomId();
+      while (userIdExists(dbFirestore, userId));
+
+      return userId;
+   }
+
+   // CHECK UUID IN DB
+   private boolean userIdExists(Firestore dbFirestore, String userId)
+           throws ExecutionException, InterruptedException {
+
+      return dbFirestore.collection("users").document(userId).get().get().exists();
    }
 }

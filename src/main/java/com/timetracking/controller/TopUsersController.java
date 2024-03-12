@@ -19,9 +19,7 @@ public class TopUsersController {
 
    // UPDATE - TOP USERS
    @PutMapping("/updateTopUsers")
-   public List<User> updateTopUsers()
-           throws ExecutionException, InterruptedException {
-
+   public List<User> updateTopUsers() throws ExecutionException, InterruptedException {
       return topUserService.updateTopUsers();
    }
 
