@@ -25,7 +25,6 @@ public class TimeTrackingApplication {
 
       FirebaseOptions options = new FirebaseOptions.Builder()
               .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-//              .setDatabaseUrl("https://fir-time-tracking-db-main-default-rtdb.eur3.firedatabase.app")
               .build();
 
       FirebaseApp.initializeApp(options);
