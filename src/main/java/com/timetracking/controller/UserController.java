@@ -1,6 +1,7 @@
 package com.timetracking.controller;
 
 import com.timetracking.domain.User;
+import com.timetracking.service.TopUserService;
 import com.timetracking.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,14 +17,6 @@ public class UserController {
 
    public UserController(UserService userService) {
       this.userService = userService;
-   }
-
-   // UPDATE - TOP USERS
-   @PutMapping("/updateTopUsers")
-   public List<User> updateTopUsers()
-           throws ExecutionException, InterruptedException {
-
-      return userService.updateTopUsers();
    }
 
    // UPDATE - SET POINT

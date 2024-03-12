@@ -19,6 +19,60 @@ public class TopUserService {
       this.userService = userService;
    }
 
+   // UPDATE - UPDATE TOP USERS
+   public List<User> updateTopUsers()
+           throws ExecutionException, InterruptedException {
+
+      clearTopUsers();
+
+      List<User> topUsers = userService.getAllUsers().stream()
+              .sorted(Comparator.comparing(User::getRating).reversed())
+              .toList();
+
+      // CLEAR TOP USERS
+      clearTopUsers();
+
+      Firestore dbFirestore = FirestoreClient.getFirestore();
+
+      for (User user : topUsers) {
+         String userId = userService.generateUniqueId(dbFirestore);
+
+         user.setId(userId);
+
+         CollectionReference collectionReference = dbFirestore.collection("top_users");
+         DocumentReference documentReference = collectionReference.document(user.getId());
+
+         ApiFuture<WriteResult> future = documentReference.set(user);
+      }
+
+      return topUsers;
+   }
+
+   // CREATE - FILLING WITH DATA TOP USERS
+   public List<User> addTop10Users()
+           throws ExecutionException, InterruptedException {
+
+      List<User> top10Users = userService.getAllUsers().stream()
+              .sorted(Comparator.comparing(User::getRating).reversed())
+              .limit(10)
+              .toList();
+
+      Firestore dbFirestore = FirestoreClient.getFirestore();
+
+      for (User user : top10Users) {
+         String userId = userService.generateUniqueId(dbFirestore);
+
+         user.setId(userId);
+
+         CollectionReference collectionReference = dbFirestore.collection("top_users");
+         DocumentReference documentReference = collectionReference.document(user.getId());
+
+         ApiFuture<WriteResult> future = documentReference.set(user);
+      }
+
+      return top10Users;
+   }
+
    // DELETE - CLEAR TOP USERS
    public void clearTopUsers()
            throws ExecutionException, InterruptedException {
@@ -31,35 +85,5 @@ public class TopUserService {
          String userId = document.getId();
          dbFirestore.collection("top_users").document(userId).delete();
       }
-   }
-
-   // CREATE - FILLING WITH DATA TOP USERS
-   public List<User> addTop10Users()
-           throws ExecutionException, InterruptedException {
-
-      List<User> top10Users = userService.getAllUsers().stream()
-              .sorted(Comparator.comparing(User::getRating).reversed())
-              .limit(10)
-              .toList();
-
-      // CLEAR TOP USERS
-      clearTopUsers();
-
-      Firestore dbFirestore = FirestoreClient.getFirestore();
-      StringBuilder updateTime = new StringBuilder();
-
-      for (User user : top10Users) {
-         String userId = userService.generateUniqueId(dbFirestore);
-
-         user.setId(userId);
-
-         CollectionReference collectionReference = dbFirestore.collection("top_users");
-         DocumentReference documentReference = collectionReference.document(user.getId());
-
-         ApiFuture<WriteResult> future = documentReference.set(user);
-         updateTime.append(future.get().getUpdateTime()).append("\n");
-      }
-
-      return top10Users;
    }
 }

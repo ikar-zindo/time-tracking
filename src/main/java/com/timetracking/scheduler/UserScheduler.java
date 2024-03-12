@@ -20,11 +20,11 @@ public class UserScheduler {
       this.topUserService = topUserService;
    }
 
-   @Scheduled(cron = "0 0 23 * * *")
+   @Scheduled(cron = "0 45 23 * * *")
    public void updateTopUsers()
            throws ExecutionException, InterruptedException {
 
-      userService.updateTopUsers();
+      topUserService.updateTopUsers();
    }
 
    @Scheduled(cron = "0 0 0 * * *")

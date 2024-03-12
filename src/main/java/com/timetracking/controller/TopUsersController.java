@@ -17,6 +17,15 @@ public class TopUsersController {
       this.topUserService = topUserService;
    }
 
+
+   // UPDATE - TOP USERS
+   @PutMapping("/updateTopUsers")
+   public List<User> updateTopUsers()
+           throws ExecutionException, InterruptedException {
+
+      return topUserService.updateTopUsers();
+   }
+
    // DELETE - CLEAR TOP USERS
    @DeleteMapping("/clear")
    public void clearTopUsers() throws InterruptedException, ExecutionException {

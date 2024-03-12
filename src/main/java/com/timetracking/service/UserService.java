@@ -70,6 +70,7 @@ public class UserService {
       String userId = generateUniqueId(dbFirestore);
 
       user.setId(userId);
+      user.setRating(0.0);
       user.setEstimates(Collections.emptyMap());
       user.setIsBlocked(false);
 
@@ -117,6 +118,8 @@ public class UserService {
 
       return "Successfully deleted " + userId;
    }
+
+   // ==================================================================================================================
 
    // GENERATE UUID
    private String generateRandomId() {
@@ -175,31 +178,5 @@ public class UserService {
       } else {
          throw new UserException("User nit found!");
       }
-   }
-
-   // AGGREGATION - UPDATE TOP USERS
-   public List<User> updateTopUsers()
-           throws ExecutionException, InterruptedException {
-
-      List<User> topUsers = getAllUsers().stream()
-              .sorted(Comparator.comparing(User::getRating).reversed())
-              .toList();
-
-      Firestore dbFirestore = FirestoreClient.getFirestore();
-      StringBuilder updateTime = new StringBuilder();
-
-      for (User user : topUsers) {
-         String userId = generateUniqueId(dbFirestore);
-
-         user.setId(userId);
-
-         CollectionReference collectionReference = dbFirestore.collection("top_users");
-         DocumentReference documentReference = collectionReference.document(user.getId());
-
-         ApiFuture<WriteResult> future = documentReference.set(user);
-         updateTime.append(future.get().getUpdateTime()).append("\n");
-      }
-
-      return topUsers;
    }
 }
