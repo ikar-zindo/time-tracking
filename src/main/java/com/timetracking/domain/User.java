@@ -3,6 +3,7 @@ package com.timetracking.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.ZonedDateTime;
 import java.util.Map;
 
 @Setter
@@ -18,4 +19,6 @@ public class User {
    private Map<String, Double> estimates;
 
    private Boolean isBlocked;
+
+   private ZonedDateTime createdAt;
 }

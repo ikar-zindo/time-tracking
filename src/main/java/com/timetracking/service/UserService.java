@@ -7,6 +7,7 @@ import com.timetracking.domain.User;
 import com.timetracking.exception.UserException;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
@@ -63,7 +64,7 @@ public class UserService {
    }
 
    //CREATE - USER
-   public String createUser(User user)
+   public User createUser(User user)
            throws ExecutionException, InterruptedException {
 
       Firestore dbFirestore = FirestoreClient.getFirestore();
@@ -73,11 +74,12 @@ public class UserService {
       user.setRating(0.0);
       user.setEstimates(Collections.emptyMap());
       user.setIsBlocked(false);
+      user.setCreatedAt(ZonedDateTime.now());
 
       ApiFuture<WriteResult> collectionsApiFuture =
               dbFirestore.collection("users").document(user.getId()).set(user);
 
-      return collectionsApiFuture.get().getUpdateTime().toString();
+      return user;
    }
 
    // READ - USER

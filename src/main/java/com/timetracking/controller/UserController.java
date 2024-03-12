@@ -37,7 +37,7 @@ public class UserController {
 
    // CREATE - USER
    @PostMapping("/create")
-   public String createUser(@RequestBody User user) throws InterruptedException, ExecutionException {
+   public User createUser(@RequestBody User user) throws InterruptedException, ExecutionException {
       return userService.createUser(user);
    }
 
