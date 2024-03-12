@@ -13,24 +13,6 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class UserService {
 
-   // READ - USERS
-   public List<User> getAllUsers()
-           throws ExecutionException, InterruptedException {
-
-      Firestore dbFirestore = FirestoreClient.getFirestore();
-      ApiFuture<QuerySnapshot> querySnapshot = dbFirestore.collection("users").get();
-
-      QuerySnapshot snapshot = querySnapshot.get();
-      List<User> users = new ArrayList<>();
-
-      for (QueryDocumentSnapshot document : snapshot) {
-         User user = document.toObject(User.class);
-         users.add(user);
-      }
-
-      return users;
-   }
-
    //CREATE - USER
    public User createUser(User user)
            throws ExecutionException, InterruptedException {
@@ -47,6 +29,24 @@ public class UserService {
               dbFirestore.collection("users").document(user.getId()).set(user);
 
       return user;
+   }
+
+   // READ - USERS
+   public List<User> getAllUsers()
+           throws ExecutionException, InterruptedException {
+
+      Firestore dbFirestore = FirestoreClient.getFirestore();
+      ApiFuture<QuerySnapshot> querySnapshot = dbFirestore.collection("users").get();
+
+      QuerySnapshot snapshot = querySnapshot.get();
+      List<User> users = new ArrayList<>();
+
+      for (QueryDocumentSnapshot document : snapshot) {
+         User user = document.toObject(User.class);
+         users.add(user);
+      }
+
+      return users;
    }
 
    // READ - USER
@@ -153,6 +153,8 @@ public class UserService {
 
       return "Successfully deleted " + userId;
    }
+
+   // ==================================================================================================================
 
    // GENERATE UUID
    private String generateRandomId() {
