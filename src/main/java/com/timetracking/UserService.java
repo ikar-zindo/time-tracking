@@ -109,14 +109,18 @@ public class UserService {
    }
 
    // DELETE - USER
-   public String deleteUser(String id) {
+   public String deleteUser(String userId) {
       Firestore dbFirestore = FirestoreClient.getFirestore();
-      ApiFuture<WriteResult> writeResult = dbFirestore.collection("user_name").document(id).delete();
+      ApiFuture<WriteResult> writeResult = dbFirestore.collection("user_name").document(userId).delete();
 
-      return "Successfully deleted " + id;
+      return "Successfully deleted " + userId;
    }
 
    // GENERATE UUID
+   private String generateRandomId() {
+      return java.util.UUID.randomUUID().toString();
+   }
+
    String generateUniqueId(Firestore dbFirestore)
            throws ExecutionException, InterruptedException {
 
@@ -134,11 +138,6 @@ public class UserService {
            throws ExecutionException, InterruptedException {
 
       return dbFirestore.collection("users").document(userId).get().get().exists();
-   }
-
-   //
-   private String generateRandomId() {
-      return java.util.UUID.randomUUID().toString();
    }
 
    // AGGREGATION

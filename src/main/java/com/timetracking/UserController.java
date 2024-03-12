@@ -17,7 +17,7 @@ public class UserController {
    }
 
    // UPDATE - TOP USERS
-   @PostMapping("/updateTopUsers")
+   @PutMapping("/updateTopUsers")
    public List<User> updateTopUsers()
            throws ExecutionException, InterruptedException {
 
@@ -25,7 +25,7 @@ public class UserController {
    }
 
    // UPDATE - SET POINT
-   @PostMapping("/set-estimate")
+   @PatchMapping("/set-estimate")
    public ResponseEntity<String> setEstimateToUser(@RequestParam String userIdFrom,
                                                    @RequestParam String userIdTo,
                                                    @RequestParam Double estimate) throws ExecutionException, InterruptedException {
@@ -53,7 +53,7 @@ public class UserController {
    }
 
    // UPDATE - USER
-   @PutMapping("/update")
+   @PatchMapping("/update")
    public String updateUsers(@RequestBody User user) throws InterruptedException, ExecutionException {
       return userService.updateUser(user);
    }
