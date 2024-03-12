@@ -1,8 +1,10 @@
-package com.timetracking;
+package com.timetracking.service;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import com.timetracking.domain.User;
+import com.timetracking.exception.UserException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -121,7 +123,7 @@ public class UserService {
       return java.util.UUID.randomUUID().toString();
    }
 
-   String generateUniqueId(Firestore dbFirestore)
+   public String generateUniqueId(Firestore dbFirestore)
            throws ExecutionException, InterruptedException {
 
       String userId;

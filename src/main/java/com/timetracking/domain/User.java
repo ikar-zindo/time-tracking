@@ -1,4 +1,4 @@
-package com.timetracking;
+package com.timetracking.domain;
 
 import lombok.Getter;
 import lombok.Setter;

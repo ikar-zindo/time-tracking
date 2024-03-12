@@ -1,5 +1,7 @@
-package com.timetracking;
+package com.timetracking.controller;
 
+import com.timetracking.domain.User;
+import com.timetracking.service.TopUserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

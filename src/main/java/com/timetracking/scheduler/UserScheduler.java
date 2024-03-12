@@ -1,18 +1,20 @@
-package com.timetracking;
+package com.timetracking.scheduler;
 
+import com.timetracking.service.TopUserService;
+import com.timetracking.service.UserService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ExecutionException;
 
 @Component
-public class Scheduler {
+public class UserScheduler {
 
    private final UserService userService;
    private final TopUserService topUserService;
 
-   public Scheduler(UserService userService,
-                    TopUserService topUserService) {
+   public UserScheduler(UserService userService,
+                        TopUserService topUserService) {
 
       this.userService = userService;
       this.topUserService = topUserService;

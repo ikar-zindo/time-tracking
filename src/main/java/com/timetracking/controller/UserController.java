@@ -1,5 +1,7 @@
-package com.timetracking;
+package com.timetracking.controller;
 
+import com.timetracking.domain.User;
+import com.timetracking.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

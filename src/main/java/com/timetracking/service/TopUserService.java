@@ -1,8 +1,9 @@
-package com.timetracking;
+package com.timetracking.service;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import com.timetracking.domain.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
