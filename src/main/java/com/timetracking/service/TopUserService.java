@@ -57,6 +57,9 @@ public class TopUserService {
               .limit(10)
               .toList();
 
+      // CLEAR TOP USERS
+      clearTopUsers();
+
       Firestore dbFirestore = FirestoreClient.getFirestore();
 
       for (User user : top10Users) {
