@@ -31,5 +31,4 @@ public class TimeTrackingApplication {
 
 		SpringApplication.run(TimeTrackingApplication.class, args);
 	}
-
 }
