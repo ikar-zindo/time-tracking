@@ -14,8 +14,8 @@ public class UserScheduler {
       this.topUserService = topUserService;
    }
 
-   // UPDATE TOP USERS AT 23:45
-   @Scheduled(cron = "0 45 23 * * *")
+   // UPDATE TOP USERS AT 20:00
+   @Scheduled(cron = "0 00 20 * * *")
    public void updateTopUsers()
            throws ExecutionException, InterruptedException {
 
