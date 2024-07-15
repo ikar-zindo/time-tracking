@@ -1,4 +1,4 @@
-package com.timetracking;
+package com.time_tracking;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

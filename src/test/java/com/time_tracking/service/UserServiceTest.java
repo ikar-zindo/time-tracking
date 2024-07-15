@@ -1,11 +1,6 @@
-package com.timetracking.service;
+package com.time_tracking.service;
 
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
-import com.timetracking.TimeTrackingApplication;
-import com.timetracking.domain.User;
+import com.time_tracking.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,8 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.concurrent.ExecutionException;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,12 +24,12 @@ class UserServiceTest {
    private User expectedUser;
 
    @BeforeEach
-   void init() {
+   void init() throws ExecutionException, InterruptedException {
       expectedUser = User.builder()
               .id("2097b5ce-7d73-4be5-9465-1732e7ce3de9")
               .name("TestName")
               .rating(0.0)
-              .estimates(new HashMap<>())
+              .receivedReviews(new LinkedList<>())
               .isBlocked(false)
               .build();
    }

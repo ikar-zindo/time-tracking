@@ -1,0 +1,9 @@
+server:
+  port:
+    8884
+
+spring:
+  application:
+    name: time-tracking
+  main:
+    banner-mode: off

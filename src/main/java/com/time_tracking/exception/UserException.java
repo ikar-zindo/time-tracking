@@ -1,4 +1,4 @@
-package com.timetracking.exception;
+package com.time_tracking.exception;
 
 public class UserException extends RuntimeException {
 

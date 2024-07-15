@@ -1,4 +1,4 @@
-package com.timetracking;
+package com.time_tracking;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
@@ -6,9 +6,9 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.common.collect.ImmutableList;
-import com.timetracking.domain.User;
-import com.timetracking.exception.UserException;
-import com.timetracking.service.UserService;
+import com.time_tracking.entity.User;
+import com.time_tracking.exception.UserException;
+import com.time_tracking.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,13 +17,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
@@ -40,14 +38,14 @@ public class ServiceTest {
    private User expectedUser;
 
    @BeforeEach
-   void init() {
+   void init() throws ExecutionException, InterruptedException {
       expectedUser = User.builder()
-              .id("2097b5ce-7d73-4be5-9465-1732e7ce3de9")
-              .name("TestName")
-              .rating(0.0)
-              .estimates(new HashMap<>())
-              .isBlocked(false)
-              .build();
+            .id("2097b5ce-7d73-4be5-9465-1732e7ce3de9")
+            .name("TestName")
+            .rating(0.0)
+            .receivedReviews(new LinkedList<>())
+            .isBlocked(false)
+            .build();
    }
 
    @Test
@@ -58,8 +56,8 @@ public class ServiceTest {
       QuerySnapshot querySnapshot = mock(QuerySnapshot.class);
 
       List<QueryDocumentSnapshot> queryDocumentSnapshots = ImmutableList.of(
-              mock(QueryDocumentSnapshot.class),
-              mock(QueryDocumentSnapshot.class)
+            mock(QueryDocumentSnapshot.class),
+            mock(QueryDocumentSnapshot.class)
       );
 
       ApiFuture<QuerySnapshot> apiFuture = mock(ApiFuture.class);
@@ -73,7 +71,7 @@ public class ServiceTest {
       when(queryDocumentSnapshots.get(0).toObject(User.class)).thenReturn(expectedUser);
       when(queryDocumentSnapshots.get(1).toObject(User.class)).thenReturn(expectedUser);
 
-      List<User> actualUsers = userServiceMock.getAllUsers();
+      List<User> actualUsers = userServiceMock.getAllUsersSortedByRating();
       actualUsers.add(expectedUser);
 
       assertIterableEquals(Arrays.asList(expectedUser), actualUsers);
