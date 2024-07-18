@@ -2,8 +2,11 @@ package com.time_tracking.service;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.cloud.FirestoreClient;
 import com.time_tracking.entity.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,7 +15,10 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
+
+   private final FirebaseAuth firebaseAuth;
 
    private CollectionReference getCollectionUsers() {
       Firestore dbFirestore = FirestoreClient.getFirestore();
@@ -41,15 +47,13 @@ public class UserService {
    // READ - USER BY ID
    public User getUserById(String userId) throws ExecutionException, InterruptedException {
       DocumentReference documentReference = getCollectionUsers().document(userId);
-      ApiFuture<DocumentSnapshot> future = documentReference.get();
-      DocumentSnapshot documentSnapshot = future.get();
+      DocumentSnapshot documentSnapshot = documentReference.get().get();
 
-      User user;
-      if (!documentSnapshot.exists()) {
+      if (documentSnapshot.exists()) {
+         return documentSnapshot.toObject(User.class);
+      } else {
          throw new InterruptedException("User not found");
       }
-      user = documentSnapshot.toObject(User.class);
-      return user;
    }
 
    // UPDATE - USER

@@ -3,19 +3,17 @@ package com.time_tracking.service;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.time_tracking.entity.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
+@RequiredArgsConstructor
 public class TopUserService {
 
    public final UserService userService;
-
-   public TopUserService(UserService userService) {
-      this.userService = userService;
-   }
 
    // UPDATE - UPDATE TOP USERS
    public List<User> updateTopUsers() throws ExecutionException, InterruptedException {

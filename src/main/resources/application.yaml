@@ -7,3 +7,12 @@ spring:
     name: time-tracking
   main:
     banner-mode: off
+
+firebase:
+  database:
+    url: "https://time-tracking-35fc0-default-rtdb.firebaseio.com/"
+  project:
+    id: "time-tracking-35fc0"
+  service:
+    account:
+      path: "serviceAccountKey.json"

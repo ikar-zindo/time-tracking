@@ -1,5 +1,6 @@
 package com.time_tracking.entity;
 
+import com.google.firebase.auth.UserRecord;
 import com.time_tracking.utils.UuidGenerator;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,10 @@ public class User {
    private String id;
 
    private String name;
+
+   private String email;
+
+   private String password;
 
    private Double rating;
 

@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -16,18 +15,6 @@ import java.util.concurrent.ExecutionException;
 public class ReviewController {
 
    private final ReviewService reviewService;
-
-   // READ - ALL REVIEWS
-//   @GetMapping("/getAll")
-//   public List<Review> getReviewsByUserId(@RequestParam String userId) throws InterruptedException, ExecutionException {
-//      return reviewService.getReviewsByUserId(userId);
-//   }
-
-   // READ - REVIEW
-//   @GetMapping
-//   public Review getReviewById(@RequestParam String reviewId) throws ExecutionException, InterruptedException {
-//      return reviewService.getReviewById(reviewId);
-//   }
 
    @PostMapping
    public ResponseEntity<Review> addReview(@RequestParam String senderUserId,

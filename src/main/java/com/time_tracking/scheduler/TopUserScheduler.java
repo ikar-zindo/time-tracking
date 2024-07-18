@@ -14,7 +14,7 @@ public class TopUserScheduler {
    private final TopUserService topUserService;
 
    // UPDATE TOP USERS AT 20:00
-   @Scheduled(cron = "0 56 2 * * *")
+   @Scheduled(cron = "0 56 13 * * *")
    public void updateTopUsers() throws ExecutionException, InterruptedException {
       topUserService.updateTopUsers();
    }
